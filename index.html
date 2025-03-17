@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jukebox Player</title>
+</head>
+<body>
+    <h1>Jukebox Player</h1>
+    <div id="audio-container"></div>
+
+    <script>
+        // Backend URL (replace with your Koyeb backend URL)
+        const backendUrl = 'https://your-koyeb-backend.koyeb.app';
+
+        // Fetch audio tracks from the backend
+        async function fetchAudioTracks() {
+            try {
+                const response = await fetch(`${backendUrl}/audio-tracks`);
+                const audioFiles = await response.json();
+
+                // Display audio players for each track
+                const container = document.getElementById('audio-container');
+                audioFiles.forEach(file => {
+                    const audioElement = document.createElement('audio');
+                    audioElement.src = file.url; // Use the download URL from GitHub
+                    audioElement.controls = true;
+                    container.appendChild(audioElement);
+                });
+            } catch (error) {
+                console.error('Error fetching audio tracks:', error);
+            }
+        }
+
+        // Load audio tracks when the page loads
+        fetchAudioTracks();
+    </script>
+</body>
+</html>
